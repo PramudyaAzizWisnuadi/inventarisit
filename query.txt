@@ -1,0 +1,4 @@
+<?php
+\App\Models\Asset::whereHas('borrowRequestDetails', function($q) {
+  $q->whereNull('returned_at');
+})->update(['status' => 'Dipinjam']);
