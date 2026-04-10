@@ -20,13 +20,18 @@
             <div class="card-body p-0 position-relative">
                 <!-- Scanner Container -->
                 <div id="reader" style="width: 100%; min-height: 300px; background: #000;"></div>
-                
+
                 <!-- Loading Overlay -->
                 <div id="scan-loading" class="position-absolute top-0 start-0 w-100 h-100 bg-white d-none d-flex flex-column align-items-center justify-content-center" style="z-index: 10;">
                     <div class="spinner-border text-primary mb-2" role="status"></div>
                     <span class="text-muted">Mencari aset...</span>
                 </div>
+            </div>
             <div class="card-footer px-4 py-3 bg-white border-top">
+                <!-- Status -->
+                <p id="scan-status" class="text-muted small mb-2">
+                    <i class="bi bi-camera me-1"></i> Menginisialisasi kamera...
+                </p>
                 <div class="input-group">
                     <input type="text" id="manual-code" class="form-control" placeholder="Masukkan Kode Aset Manual (contoh: HW-2024-001)" aria-label="Manual Code">
                     <button class="btn btn-primary" type="button" id="btn-manual-search">
@@ -94,6 +99,7 @@
         const scanStatus = document.getElementById('scan-status');
 
         let isProcessing = false;
+        let cameraActive = false;
 
         const config = { 
             fps: 10, 
@@ -105,7 +111,11 @@
             if (isProcessing) return;
             
             isProcessing = true;
-            html5QrCode.pause(); 
+
+            // Pause kamera hanya jika sedang aktif
+            if (cameraActive) {
+                try { html5QrCode.pause(); } catch(e) {}
+            }
             
             showLoading(true);
             
@@ -130,7 +140,9 @@
                         title: error.message
                     });
                     isProcessing = false;
-                    html5QrCode.resume();
+                    if (cameraActive) {
+                        try { html5QrCode.resume(); } catch(e) {}
+                    }
                     scanStatus.innerHTML = '<i class="bi bi-camera me-1"></i> Siap memindai';
                 })
                 .finally(() => {
@@ -175,9 +187,9 @@
 
         // Check for HTTPS/Localhost requirement
         if (window.location.protocol !== 'https:' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-            scanStatus.innerHTML = '<i class="bi bi-exclamation-triangle-fill text-danger me-1"></i> HTTPS Diperlukan! Kamera hanya dapat diakses melalui koneksi aman (HTTPS).';
-            console.error("Camera access requires HTTPS.");
-            return;
+            scanStatus.innerHTML = '<i class="bi bi-exclamation-triangle-fill text-warning me-1"></i> Kamera tidak tersedia (butuh HTTPS). Gunakan pencarian manual di bawah.';
+            console.warn("Camera access requires HTTPS. Manual search is still available.");
+            return; // Hentikan inisialisasi kamera saja, manual search tetap bisa
         }
 
         // Start Scanner
@@ -187,17 +199,18 @@
                 config, 
                 onScanSuccess
             ).then(() => {
+                cameraActive = true;
                 scanStatus.innerHTML = '<i class="bi bi-camera me-1"></i> Kamera aktif, siap memindai';
             }).catch(err => {
+                cameraActive = false;
                 scanStatus.innerHTML = `
-                    <div class="text-danger mb-2"><i class="bi bi-exclamation-triangle-fill me-1"></i> Gagal akses kamera</div>
+                    <div class="text-danger mb-2"><i class="bi bi-exclamation-triangle-fill me-1"></i> Gagal akses kamera. Gunakan pencarian manual.</div>
                     <button class="btn btn-sm btn-outline-primary" onclick="location.reload()">Coba Lagi</button>
                 `;
                 console.error("Unable to start scanning.", err);
             });
         };
 
-        // Try direct access first (more robust for some mobile browsers)
         startCamera();
     });
 
