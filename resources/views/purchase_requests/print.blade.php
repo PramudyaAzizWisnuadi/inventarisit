@@ -4,18 +4,20 @@
     <meta charset="UTF-8">
     <title>Print Pengadaan - {{ $purchase_request->request_number }}</title>
     <style>
-        body { font-family: Arial, sans-serif; font-size: 14px; margin: 40px; color: #333; }
-        .header { text-align: center; border-bottom: 2px solid #333; padding-bottom: 20px; margin-bottom: 30px; }
-        .header h3 { margin: 0; font-size: 20px; text-transform: uppercase; }
-        .table-data { width: 100%; border-collapse: collapse; margin-bottom: 40px; }
-        .table-data th, .table-data td { border: 1px solid #333; padding: 10px; text-align: left; }
-        .table-data th { background: #f4f4f4; width: 150px; }
-        .signature-section { display: flex; justify-content: space-between; margin-top: 60px; text-align: center; }
+        body { font-family: Arial, sans-serif; font-size: 11px; margin: 20px; color: #333; line-height: 1.3; }
+        .header { text-align: center; border-bottom: 2px solid #333; padding-bottom: 8px; margin-bottom: 15px; }
+        .header h3 { margin: 0; font-size: 14px; text-transform: uppercase; }
+        .header p { margin: 3px 0 0; font-size: 12px; }
+        .table-data { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
+        .table-data th, .table-data td { border: 1px solid #333; padding: 4px 6px; text-align: left; vertical-align: top; }
+        .table-data th { background: #f4f4f4; width: 130px; font-weight: bold; }
+        .signature-section { display: flex; justify-content: space-between; margin-top: 20px; text-align: center; }
         .sig-box { width: 30%; }
-        .sig-space { height: 90px; }
+        .sig-space { height: 50px; }
         .sig-name { font-weight: bold; text-decoration: underline; }
         @media print {
-            body { margin: 0; padding: 20px; }
+            @page { size: A4 portrait; margin: 1cm; }
+            body { margin: 0; padding: 0; }
             .no-print { display: none; }
         }
     </style>

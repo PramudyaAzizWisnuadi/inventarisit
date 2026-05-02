@@ -25,6 +25,8 @@ class DashboardController extends Controller
                 ->whereDate('expiry_date', '<=', now()->addDays(30))
                 ->count(),
             'total_nilai'      => Asset::sum('purchase_price'),
+            'total_pengadaan'  => \App\Models\PurchaseRequest::count(),
+            'total_nilai_pengadaan' => \App\Models\PurchaseRequest::sum('total_price'),
         ];
 
         // Chart: Assets by Category

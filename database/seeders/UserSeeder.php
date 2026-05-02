@@ -16,10 +16,10 @@ class UserSeeder extends Seeder
 
         // 1. Initial Super Admin
         User::firstOrCreate(
-            ['email' => 'admin@inventaris.com'],
+            ['email' => 'staffit@mdgroup.id'],
             [
-                'name' => 'Administrator IT',
-                'username' => 'admin',
+                'name' => 'Staff IT',
+                'username' => 'staffit',
                 'password' => Hash::make('password'),
                 'role_id' => $adminRole->id,
                 'is_active' => true,

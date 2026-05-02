@@ -82,6 +82,8 @@ Route::middleware('auth')->group(function () {
     Route::get('borrow-requests/{borrow_request}/print-bast', [App\Http\Controllers\BorrowRequestController::class, 'printBast'])->name('borrow-requests.print-bast');
 
     // Purchase Requests
+    Route::get('purchase-requests/import-template', [App\Http\Controllers\PurchaseRequestController::class, 'importTemplate'])->name('purchase-requests.import-template');
+    Route::post('purchase-requests/import', [App\Http\Controllers\PurchaseRequestController::class, 'importData'])->name('purchase-requests.import');
     Route::resource('purchase-requests', App\Http\Controllers\PurchaseRequestController::class);
     Route::post('purchase-requests/{purchase_request}/approve-manager', [App\Http\Controllers\PurchaseRequestController::class, 'approveManager'])->name('purchase-requests.approve-manager');
     Route::post('purchase-requests/{purchase_request}/approve-director', [App\Http\Controllers\PurchaseRequestController::class, 'approveDirector'])->name('purchase-requests.approve-director');

@@ -59,8 +59,8 @@
                     <td>{{ $detail->asset->specifications ?? '-' }}</td>
                     <td>{{ $detail->asset->serial_number ?? '-' }}</td>
                     <td>
-                        {{ $detail->asset->location->branch->name ?? 'Pusat' }}<br>
-                        <small class="text-muted">{{ $detail->asset->location->name ?? '-' }}</small>
+                        {{ $detail->asset->location?->branch?->name ?? '-' }}<br>
+                        <small class="text-muted">{{ $detail->asset->location?->name ?? '-' }}</small>
                     </td>
                 </tr>
                 @endforeach

@@ -23,7 +23,9 @@ class BorrowRequestController extends Controller
 
     public function create()
     {
-        $assets = Asset::whereIn('status', ['Tersedia', 'available', 'Aktif'])->get();
+        $assets = Asset::with(['category', 'location.branch'])
+            ->whereIn('status', ['Tersedia', 'available', 'Aktif', 'Dipinjam'])
+            ->get();
         return view('borrow_requests.create', compact('assets'));
     }
 
@@ -103,6 +105,7 @@ class BorrowRequestController extends Controller
 
     public function printBast(BorrowRequest $borrow_request)
     {
+        $borrow_request->load(['details.asset.location.branch', 'user']);
         return view('borrow_requests.print_bast', compact('borrow_request'));
     }
 }

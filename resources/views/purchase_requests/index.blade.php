@@ -3,9 +3,14 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h5 class="fw-700 mb-0">Pengadaan Barang</h5>
-    <a href="{{ route('purchase-requests.create') }}" class="btn btn-primary btn-sm">
-        <i class="bi bi-plus-circle me-1"></i>Buat Pengajuan Baru
-    </a>
+    <div>
+        <button type="button" class="btn btn-outline-success btn-sm me-2" data-bs-toggle="modal" data-bs-target="#importModal">
+            <i class="bi bi-file-earmark-arrow-up me-1"></i>Import Data
+        </button>
+        <a href="{{ route('purchase-requests.create') }}" class="btn btn-primary btn-sm">
+            <i class="bi bi-plus-circle me-1"></i>Buat Pengajuan Baru
+        </a>
+    </div>
 </div>
 
 <div class="card">
@@ -55,4 +60,58 @@
         </table>
     </div>
 </div>
+
+<!-- Import Modal -->
+<div class="modal fade" id="importModal" tabindex="-1" aria-labelledby="importModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ route('purchase-requests.import') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="importModalLabel">Import Data Pengadaan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-info small">
+                        Gunakan fitur ini untuk memigrasi data dari sistem lama. 
+                        Silakan unduh template excel terlebih dahulu agar struktur kolom sesuai.
+                        <br><br>
+                        <a href="{{ route('purchase-requests.import-template') }}" class="btn btn-sm btn-info text-white">
+                            <i class="bi bi-file-earmark-excel me-1"></i> Download Template Excel
+                        </a>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="file_import" class="form-label fw-500">Pilih File (CSV / Excel)</label>
+                        <input class="form-control" type="file" id="file_import" name="file_import" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Import Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@push('scripts')
+<script>
+    $(function() {
+        if ($('.datatable').length > 0) {
+            // Re-initialize DataTable with specific order for this page
+            $('.datatable').DataTable().destroy();
+            $('.datatable').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/id.json',
+                },
+                pageLength: 25,
+                responsive: true,
+                colReorder: true,
+                order: [[6, 'desc']], // Sort by Tanggal (index 6) descending
+                dom: '<"d-flex justify-content-between align-items-center"lf>rt<"d-flex justify-content-between align-items-center border-top"ip>',
+            });
+        }
+    });
+</script>
+@endpush
 @endsection

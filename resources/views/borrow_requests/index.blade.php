@@ -52,4 +52,23 @@
         </table>
     </div>
 </div>
+@push('scripts')
+<script>
+    $(function() {
+        if ($('.datatable').length > 0) {
+            $('.datatable').DataTable().destroy();
+            $('.datatable').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/id.json',
+                },
+                pageLength: 25,
+                responsive: true,
+                colReorder: true,
+                order: [[4, 'desc']], // Sort by Tanggal (index 4) descending
+                dom: '<"d-flex justify-content-between align-items-center"lf>rt<"d-flex justify-content-between align-items-center border-top"ip>',
+            });
+        }
+    });
+</script>
+@endpush
 @endsection

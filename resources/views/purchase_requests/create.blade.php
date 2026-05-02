@@ -32,7 +32,7 @@
                                     <td>
                                         <div class="input-group input-group-sm">
                                             <span class="input-group-text">Rp</span>
-                                            <input type="number" name="items[0][price]" class="form-control price-input" value="0" min="0" required>
+                                            <input type="text" name="items[0][price]" class="form-control price-input" value="0" required>
                                         </div>
                                     </td>
                                     <td class="text-center"><button type="button" class="btn btn-sm btn-outline-danger remove-btn disabled"><i class="bi bi-trash"></i></button></td>
@@ -75,13 +75,54 @@
             <td>
                 <div class="input-group input-group-sm">
                     <span class="input-group-text">Rp</span>
-                    <input type="number" name="items[${itemIdx}][price]" class="form-control price-input" value="0" min="0" required>
+                    <input type="text" name="items[${itemIdx}][price]" class="form-control price-input" value="0" required>
                 </div>
             </td>
             <td class="text-center"><button type="button" class="btn btn-sm btn-danger remove-btn"><i class="bi bi-trash"></i></button></td>
         `;
         body.appendChild(tr);
         itemIdx++;
+    });
+
+    // Rupiah Formatter Logic
+    document.getElementById('itemsBody').addEventListener('input', function(e) {
+        if (e.target.classList.contains('price-input')) {
+            // Simpan posisi kursor
+            let cursorPosition = e.target.selectionStart;
+            let originalLength = e.target.value.length;
+            
+            // Bersihkan selain angka
+            let val = e.target.value.replace(/[^0-9]/g, '');
+            if (val === '') {
+                e.target.value = '';
+                return;
+            }
+            
+            // Format ke Rupiah (Titik tiap 3 angka)
+            let formatted = '';
+            let valRev = val.split('').reverse().join('');
+            for (let i = 0; i < valRev.length; i++) {
+                if (i > 0 && i % 3 === 0) {
+                    formatted += '.';
+                }
+                formatted += valRev[i];
+            }
+            formatted = formatted.split('').reverse().join('');
+            
+            e.target.value = formatted;
+            
+            // Kembalikan posisi kursor
+            let newLength = formatted.length;
+            cursorPosition = cursorPosition + (newLength - originalLength);
+            e.target.setSelectionRange(cursorPosition, cursorPosition);
+        }
+    });
+
+    // Strip dots before submit
+    document.querySelector('form').addEventListener('submit', function() {
+        document.querySelectorAll('.price-input').forEach(input => {
+            input.value = input.value.replace(/\./g, '');
+        });
     });
 
     document.getElementById('itemsBody').addEventListener('click', function(e) {

@@ -78,13 +78,39 @@
             </div>
         </div>
     </div>
-    <div class="col-12 col-md-6">
-        <div class="card h-100 border-0" style="background:linear-gradient(135deg,#1e293b,#334155);color:#fff;">
-            <div class="card-body d-flex align-items-center gap-3">
-                <i class="bi bi-currency-dollar" style="font-size:2.5rem;opacity:.7;"></i>
+    <div class="col-6 col-md-3">
+        <div class="stat-card stat-card-primary" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
+            <div class="d-flex justify-content-between align-items-start">
                 <div>
-                    <div style="font-size:1.6rem;font-weight:700;">Rp {{ number_format($stats['total_nilai'],0,',','.') }}</div>
-                    <div style="font-size:.8rem;opacity:.8;">Total Nilai Inventaris Hardware</div>
+                    <div class="stat-value">{{ $stats['total_pengadaan'] }}</div>
+                    <div class="stat-label">Total Pengadaan</div>
+                </div>
+                <i class="bi bi-cart-check stat-icon"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 mt-3">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="card h-100 border-0" style="background:linear-gradient(135deg,#1e293b,#334155);color:#fff;">
+                    <div class="card-body d-flex align-items-center gap-3">
+                        <i class="bi bi-currency-dollar" style="font-size:2.5rem;opacity:.7;"></i>
+                        <div>
+                            <div style="font-size:1.6rem;font-weight:700;">Rp {{ number_format($stats['total_nilai'],0,',','.') }}</div>
+                            <div style="font-size:.8rem;opacity:.8;">Total Nilai Inventaris Hardware</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100 border-0" style="background:linear-gradient(135deg,#047857,#064e3b);color:#fff;">
+                    <div class="card-body d-flex align-items-center gap-3">
+                        <i class="bi bi-cash-stack" style="font-size:2.5rem;opacity:.7;"></i>
+                        <div>
+                            <div style="font-size:1.6rem;font-weight:700;">Rp {{ number_format($stats['total_nilai_pengadaan'],0,',','.') }}</div>
+                            <div style="font-size:.8rem;opacity:.8;">Total Nilai Semua Pengadaan</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

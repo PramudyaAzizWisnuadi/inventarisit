@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <input type="text" id="test-input" class="price-input" value="0">
+    <div id="output"></div>
+    <script>
+        document.getElementById('test-input').addEventListener('input', function(e) {
+            let cursorPosition = e.target.selectionStart;
+            let originalLength = e.target.value.length;
+            
+            let val = e.target.value.replace(/[^0-9]/g, '');
+            if (val === '') {
+                e.target.value = '';
+                return;
+            }
+            
+            // Format
+            let formatted = parseInt(val, 10).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            e.target.value = formatted;
+            
+            // Restore cursor
+            let newLength = formatted.length;
+            cursorPosition = cursorPosition + (newLength - originalLength);
+            e.target.setSelectionRange(cursorPosition, cursorPosition);
+            
+            document.getElementById('output').innerText = 'Raw: ' + val + ' | Formatted: ' + formatted;
+        });
+    </script>
+</body>
+</html>

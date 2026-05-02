@@ -55,6 +55,17 @@
                         <tr><td class="text-muted">Total Keseluruhan</td><td class="fw-600 text-success" style="font-size: 1.1rem;">Rp {{ number_format($purchase_request->total_price, 0, ',', '.') }}</td></tr>
                         <tr><td class="text-muted">Tanggal Diajukan</td><td>{{ \Carbon\Carbon::parse($purchase_request->request_date)->format('d F Y') }}</td></tr>
                         <tr><td class="text-muted">Catatan</td><td>{{ $purchase_request->notes ?? '-' }}</td></tr>
+                        @if($purchase_request->receipt_photo)
+                        <tr>
+                            <td class="text-muted align-middle">Bukti Nota / Approval</td>
+                            <td>
+                                <a href="{{ asset('storage/' . $purchase_request->receipt_photo) }}" target="_blank">
+                                    <img src="{{ asset('storage/' . $purchase_request->receipt_photo) }}" class="img-thumbnail" style="max-height: 150px;">
+                                </a>
+                                <div class="small text-muted mt-1">Klik gambar untuk memperbesar</div>
+                            </td>
+                        </tr>
+                        @endif
                     </tbody>
                 </table>
             </div>
@@ -91,6 +102,12 @@
                         @csrf
                         <button class="btn btn-success w-100 btn-sm">Barang Diterima Selesai</button>
                     </form>
+                @endif
+
+                @if($purchase_request->status != 'received')
+                    <a href="{{ route('purchase-requests.edit', $purchase_request) }}" class="btn btn-outline-primary w-100 btn-sm mb-2">
+                        <i class="bi bi-pencil-square me-1"></i> Edit Realisasi / Upload Nota
+                    </a>
                 @endif
 
                 @if(!in_array($purchase_request->status, ['rejected', 'received']))

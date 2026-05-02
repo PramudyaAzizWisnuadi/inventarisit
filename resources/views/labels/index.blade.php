@@ -60,7 +60,7 @@
             <div class="card-body text-center py-3">
                 <div class="text-muted small mb-1">Preview Label</div>
                 <div style="background:#f8fafc;border-radius:8px;padding:12px;display:inline-block;min-width:160px;">
-                    <div style="font-size:.6rem;font-weight:700;color:#1e293b;margin-bottom:6px;">INVENTARIS IT</div>
+                    <div style="font-size:.6rem;font-weight:700;color:#1e293b;margin-bottom:6px;">ASSET MD GROUP</div>
                     <div style="width:60px;height:60px;background:#e2e8f0;border-radius:4px;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;">
                         <i class="bi bi-qr-code" style="font-size:2rem;color:#6366f1;"></i>
                     </div>

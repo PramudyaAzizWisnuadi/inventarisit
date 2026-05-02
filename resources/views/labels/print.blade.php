@@ -60,7 +60,7 @@
     .label-header { 
         font-size: 7pt; 
         font-weight: bold; 
-        color: #6366f1; 
+        color: red; 
         text-transform: uppercase; 
         margin-bottom: 1mm;
     }
@@ -73,8 +73,8 @@
         font-size: 8pt; 
         font-weight: bold;
         margin-top: 1mm;
-        height: 2.4em;
-        overflow: hidden;
+        margin-bottom: 0.5mm;
+        line-height: 1.2;
     }
     .label-info { 
         font-size: 7pt; 
@@ -118,7 +118,10 @@
                         <img src="data:image/svg+xml;base64, {!! base64_encode(SimpleSoftwareIO\QrCode\Facades\QrCode::format('svg')->size(120)->margin(0)->generate($asset->asset_code)) !!} ">
                     </div>
                     <div class="info-box">
-                        <div class="label-header">INVENTARIS IT</div>
+                        <div class="label-header">
+                            <img src="{{ asset('logomd.png') }}" style="height: 10px; vertical-align: middle; margin-right: 3px; margin-top: -2px;" alt="Logo">
+                            ASSET MD GROUP
+                        </div>
                         <div class="label-code">{{ $asset->asset_code }}</div>
                         <div class="label-name">{{ Str::limit($asset->name, 40) }}</div>
                         <div class="label-info">{{ $asset->category?->name }}</div>
