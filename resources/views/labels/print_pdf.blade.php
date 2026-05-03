@@ -83,6 +83,7 @@
                         <div class="label-code">{{ $asset->asset_code }}</div>
                         <div class="label-name">{{ Str::limit($asset->name, 40) }}</div>
                         <div class="label-info">{{ $asset->category?->name }}</div>
+                        <div class="label-info">Cabang: {{ $asset->location?->branch?->name ?? '-' }}</div>
                         <div class="label-info">Lokasi: {{ $asset->location?->name ?? '-' }}</div>
                         <div class="label-info">{{ now()->format('d/m/Y') }}</div>
                     </div>

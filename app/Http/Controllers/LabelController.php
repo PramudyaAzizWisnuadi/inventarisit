@@ -11,7 +11,7 @@ class LabelController extends Controller
 {
     public function index()
     {
-        $assets = Asset::with(['category', 'location'])->orderBy('asset_code')->get();
+        $assets = Asset::with(['category', 'location.branch'])->orderBy('asset_code')->get();
         return view('labels.index', compact('assets'));
     }
 
@@ -22,7 +22,7 @@ class LabelController extends Controller
             return back()->with('error', 'Pilih minimal satu aset untuk dicetak labelnya.');
         }
 
-        $assets = Asset::with(['category', 'location'])->whereIn('id', $ids)->orderBy('asset_code')->get();
+        $assets = Asset::with(['category', 'location.branch'])->whereIn('id', $ids)->orderBy('asset_code')->get();
 
         AuditLog::record('print', 'Cetak label aset: ' . $assets->pluck('asset_code')->join(', '));
 

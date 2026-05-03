@@ -26,7 +26,7 @@
                     <input type="checkbox" name="ids[]" value="{{ $asset->id }}" id="asset_{{ $asset->id }}" class="form-check-input me-3 asset-cb">
                     <div class="flex-grow-1">
                         <div class="small fw-500">{{ $asset->name }}</div>
-                        <div class="text-muted" style="font-size:.72rem;"><code>{{ $asset->asset_code }}</code> • {{ $asset->category?->name }} • {{ $asset->location?->name }}</div>
+                        <div class="text-muted" style="font-size:.72rem;"><code>{{ $asset->asset_code }}</code> • {{ $asset->category?->name }} • {{ $asset->location?->branch?->name ?? '-' }} / {{ $asset->location?->name }}</div>
                     </div>
                     <span class="badge {{ $asset->status=='Digunakan'?'badge-digunakan':($asset->status=='Tersedia'?'badge-tersedia':'badge-perbaikan') }}">{{ $asset->status }}</span>
                 </label>
@@ -66,6 +66,7 @@
                     </div>
                     <div style="font-size:.65rem;font-weight:700;color:#1e293b;">HW-2024-0001</div>
                     <div style="font-size:.55rem;color:#64748b;">Nama Aset</div>
+                    <div style="font-size:.5rem;color:#94a3b8;">Cabang</div>
                     <div style="font-size:.5rem;color:#94a3b8;">Lokasi</div>
                 </div>
             </div>
