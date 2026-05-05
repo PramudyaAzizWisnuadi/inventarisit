@@ -265,7 +265,7 @@
 
     window.deleteConfirm = function(e) {
         e.preventDefault();
-        var form = e.currentTarget;
+        var form = e.target;
         const message = form.getAttribute('data-confirm') || 'Apakah Anda yakin ingin menghapus data ini?';
         
         Swal.fire({

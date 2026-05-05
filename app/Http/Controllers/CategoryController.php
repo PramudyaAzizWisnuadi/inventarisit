@@ -35,7 +35,7 @@ class CategoryController extends Controller
 
     public function update(Request $request, Category $category)
     {
-        $request->validate(['name' => 'required|string|max:255']);
+        $request->validate(['name' => 'required|string|max:255', 'type' => 'required']);
         $category->update($request->all());
         AuditLog::record('update', "Kategori diperbarui: {$category->name}");
         return back()->with('success', 'Kategori berhasil diperbarui.');
